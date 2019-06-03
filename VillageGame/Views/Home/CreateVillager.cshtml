@@ -1,0 +1,30 @@
+﻿@using VillageGame.Models;
+@{ 
+    VillageGameEntities2 db = new VillageGameEntities2();
+    if((int)db.Villagers.ToArray().Length < (int)db.Buildings.Find(1).Houses)
+    {
+        <form action="~/Home/CreateVillager" method="post">
+            <table>
+                <tr>
+                    <td>
+                        <p>Enter villager's name:</p>
+                    </td>
+                    <td>
+                        <input type="text" name="Name" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="submit" />
+                    </td>
+                </tr>
+            </table>
+        </form>
+
+    }
+    else
+    {
+        <h2>I know your not trying to cheat</h2>
+        Html.ActionLink("Back to the game", "Index", "Home");
+    }
+}

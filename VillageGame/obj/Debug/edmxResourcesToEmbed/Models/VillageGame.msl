@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="VillageGameModelStoreContainer" CdmEntityContainer="VillageGameEntities2">
+    <EntitySetMapping Name="Buildings">
+      <EntityTypeMapping TypeName="VillageGameModel.Building">
+        <MappingFragment StoreEntitySet="Buildings">
+          <ScalarProperty Name="Castles" ColumnName="Castles" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Houses" ColumnName="Houses" />
+          <ScalarProperty Name="Wells" ColumnName="Wells" />
+          <ScalarProperty Name="Farms" ColumnName="Farms" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="GameDatas">
+      <EntityTypeMapping TypeName="VillageGameModel.GameData">
+        <MappingFragment StoreEntitySet="GameData">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Days" ColumnName="Days" />
+          <ScalarProperty Name="Actions" ColumnName="Actions" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Perks">
+      <EntityTypeMapping TypeName="VillageGameModel.Perk">
+        <MappingFragment StoreEntitySet="Perks">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Resources">
+      <EntityTypeMapping TypeName="VillageGameModel.Resource">
+        <MappingFragment StoreEntitySet="Resources">
+          <ScalarProperty Name="Stone" ColumnName="Stone" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Food" ColumnName="Food" />
+          <ScalarProperty Name="Water" ColumnName="Water" />
+          <ScalarProperty Name="Wood" ColumnName="Wood" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Villagers">
+      <EntityTypeMapping TypeName="VillageGameModel.Villager">
+        <MappingFragment StoreEntitySet="Villager">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Perk" ColumnName="Perk" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

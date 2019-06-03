@@ -1,0 +1,17 @@
+﻿body {
+
+}
+
+#gameTable {
+    width: 600px;
+}
+
+.myLabel {
+    width: 100px;
+}
+td {
+    min-width: 50px;
+}
+.myButtons {
+    width: 100px;
+}

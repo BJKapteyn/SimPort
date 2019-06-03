@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="VillageGameModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Building">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Houses" Type="Int32" />
+    <Property Name="Wells" Type="Int32" />
+    <Property Name="Farms" Type="Int32" />
+    <Property Name="Castles" Type="Int32" />
+  </EntityType>
+  <EntityType Name="GameData">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Days" Type="Int32" />
+    <Property Name="Actions" Type="Int32" />
+  </EntityType>
+  <EntityType Name="Perk">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <NavigationProperty Name="Villagers" Relationship="Self.FK__Villager__Perk__403A8C7D" FromRole="Perks" ToRole="Villager" />
+  </EntityType>
+  <EntityType Name="Resource">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Food" Type="Int32" />
+    <Property Name="Water" Type="Int32" />
+    <Property Name="Wood" Type="Int32" />
+    <Property Name="Stone" Type="Int32" />
+  </EntityType>
+  <EntityType Name="Villager">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="Perk" Type="Int32" />
+    <NavigationProperty Name="Perk1" Relationship="Self.FK__Villager__Perk__403A8C7D" FromRole="Villager" ToRole="Perks" />
+  </EntityType>
+  <Association Name="FK__Villager__Perk__403A8C7D">
+    <End Role="Perks" Type="Self.Perk" Multiplicity="0..1" />
+    <End Role="Villager" Type="Self.Villager" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Perks">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Villager">
+        <PropertyRef Name="Perk" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="VillageGameEntities2" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Buildings" EntityType="Self.Building" />
+    <EntitySet Name="GameDatas" EntityType="Self.GameData" />
+    <EntitySet Name="Perks" EntityType="Self.Perk" />
+    <EntitySet Name="Resources" EntityType="Self.Resource" />
+    <EntitySet Name="Villagers" EntityType="Self.Villager" />
+    <AssociationSet Name="FK__Villager__Perk__403A8C7D" Association="Self.FK__Villager__Perk__403A8C7D">
+      <End Role="Perks" EntitySet="Perks" />
+      <End Role="Villager" EntitySet="Villagers" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

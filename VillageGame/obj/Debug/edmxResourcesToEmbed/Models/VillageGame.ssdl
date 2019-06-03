@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="VillageGameModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Buildings">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Houses" Type="int" />
+    <Property Name="Wells" Type="int" />
+    <Property Name="Farms" Type="int" />
+    <Property Name="Castles" Type="int" />
+  </EntityType>
+  <EntityType Name="GameData">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Days" Type="int" />
+    <Property Name="Actions" Type="int" />
+  </EntityType>
+  <EntityType Name="Perks">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Resources">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Food" Type="int" />
+    <Property Name="Water" Type="int" />
+    <Property Name="Wood" Type="int" />
+    <Property Name="Stone" Type="int" />
+  </EntityType>
+  <EntityType Name="Villager">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="20" />
+    <Property Name="Perk" Type="int" />
+  </EntityType>
+  <Association Name="FK__Villager__Perk__403A8C7D">
+    <End Role="Perks" Type="Self.Perks" Multiplicity="0..1" />
+    <End Role="Villager" Type="Self.Villager" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Perks">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Villager">
+        <PropertyRef Name="Perk" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="VillageGameModelStoreContainer">
+    <EntitySet Name="Buildings" EntityType="Self.Buildings" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="GameData" EntityType="Self.GameData" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Perks" EntityType="Self.Perks" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Resources" EntityType="Self.Resources" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Villager" EntityType="Self.Villager" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__Villager__Perk__403A8C7D" Association="Self.FK__Villager__Perk__403A8C7D">
+      <End Role="Perks" EntitySet="Perks" />
+      <End Role="Villager" EntitySet="Villager" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

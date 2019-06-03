@@ -1,0 +1,220 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="VillageGameModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Buildings">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Houses" Type="int" />
+          <Property Name="Wells" Type="int" />
+          <Property Name="Farms" Type="int" />
+          <Property Name="Castles" Type="int" />
+        </EntityType>
+        <EntityType Name="GameData">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Days" Type="int" />
+          <Property Name="Actions" Type="int" />
+        </EntityType>
+        <EntityType Name="Perks">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Resources">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Food" Type="int" />
+          <Property Name="Water" Type="int" />
+          <Property Name="Wood" Type="int" />
+          <Property Name="Stone" Type="int" />
+        </EntityType>
+        <EntityType Name="Villager">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="20" />
+          <Property Name="Perk" Type="int" />
+        </EntityType>
+        <Association Name="FK__Villager__Perk__403A8C7D">
+          <End Role="Perks" Type="Self.Perks" Multiplicity="0..1" />
+          <End Role="Villager" Type="Self.Villager" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Perks">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Villager">
+              <PropertyRef Name="Perk" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="VillageGameModelStoreContainer">
+          <EntitySet Name="Buildings" EntityType="Self.Buildings" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GameData" EntityType="Self.GameData" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Perks" EntityType="Self.Perks" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Resources" EntityType="Self.Resources" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Villager" EntityType="Self.Villager" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Villager__Perk__403A8C7D" Association="Self.FK__Villager__Perk__403A8C7D">
+            <End Role="Perks" EntitySet="Perks" />
+            <End Role="Villager" EntitySet="Villager" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="VillageGameModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Building">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Houses" Type="Int32" />
+          <Property Name="Wells" Type="Int32" />
+          <Property Name="Farms" Type="Int32" />
+          <Property Name="Castles" Type="Int32" />
+        </EntityType>
+        <EntityType Name="GameData">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Days" Type="Int32" />
+          <Property Name="Actions" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Perk">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Villagers" Relationship="Self.FK__Villager__Perk__403A8C7D" FromRole="Perks" ToRole="Villager" />
+        </EntityType>
+        <EntityType Name="Resource">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Food" Type="Int32" />
+          <Property Name="Water" Type="Int32" />
+          <Property Name="Wood" Type="Int32" />
+          <Property Name="Stone" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Villager">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Perk" Type="Int32" />
+          <NavigationProperty Name="Perk1" Relationship="Self.FK__Villager__Perk__403A8C7D" FromRole="Villager" ToRole="Perks" />
+        </EntityType>
+        <Association Name="FK__Villager__Perk__403A8C7D">
+          <End Role="Perks" Type="Self.Perk" Multiplicity="0..1" />
+          <End Role="Villager" Type="Self.Villager" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Perks">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Villager">
+              <PropertyRef Name="Perk" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="VillageGameEntities2" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Buildings" EntityType="Self.Building" />
+          <EntitySet Name="GameDatas" EntityType="Self.GameData" />
+          <EntitySet Name="Perks" EntityType="Self.Perk" />
+          <EntitySet Name="Resources" EntityType="Self.Resource" />
+          <EntitySet Name="Villagers" EntityType="Self.Villager" />
+          <AssociationSet Name="FK__Villager__Perk__403A8C7D" Association="Self.FK__Villager__Perk__403A8C7D">
+            <End Role="Perks" EntitySet="Perks" />
+            <End Role="Villager" EntitySet="Villagers" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="VillageGameModelStoreContainer" CdmEntityContainer="VillageGameEntities2">
+          <EntitySetMapping Name="Buildings">
+            <EntityTypeMapping TypeName="VillageGameModel.Building">
+              <MappingFragment StoreEntitySet="Buildings">
+                <ScalarProperty Name="Castles" ColumnName="Castles" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Houses" ColumnName="Houses" />
+                <ScalarProperty Name="Wells" ColumnName="Wells" />
+                <ScalarProperty Name="Farms" ColumnName="Farms" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GameDatas">
+            <EntityTypeMapping TypeName="VillageGameModel.GameData">
+              <MappingFragment StoreEntitySet="GameData">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Days" ColumnName="Days" />
+                <ScalarProperty Name="Actions" ColumnName="Actions" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Perks">
+            <EntityTypeMapping TypeName="VillageGameModel.Perk">
+              <MappingFragment StoreEntitySet="Perks">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Resources">
+            <EntityTypeMapping TypeName="VillageGameModel.Resource">
+              <MappingFragment StoreEntitySet="Resources">
+                <ScalarProperty Name="Stone" ColumnName="Stone" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Food" ColumnName="Food" />
+                <ScalarProperty Name="Water" ColumnName="Water" />
+                <ScalarProperty Name="Wood" ColumnName="Wood" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Villagers">
+            <EntityTypeMapping TypeName="VillageGameModel.Villager">
+              <MappingFragment StoreEntitySet="Villager">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Perk" ColumnName="Perk" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
