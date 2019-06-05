@@ -15,7 +15,6 @@ namespace VillageGame.Controllers
 
         public bool EndGame()
         {
-
             if (db.Resources.Find(1).Food < 0 || db.Resources.Find(1).Water < 0)
             {
                 return true;
@@ -25,8 +24,16 @@ namespace VillageGame.Controllers
 
         public bool GotRaided()
         {
+            int numCastles = (int)db.Buildings.Find(1).Castles;
+            int castleProtection = 5 * numCastles;
             int chance = ran.Next(1, 101);
-            if(chance <= 10)
+
+            if(numCastles == 2)
+            {
+                return false;
+            }
+
+            if(chance <= 10 - castleProtection)
             {
                 return true;
             }
@@ -68,24 +75,29 @@ namespace VillageGame.Controllers
 
         public ActionResult ResourceAction(string type)
         {
-            int quantityWood = ran.Next(1, 4);
-            int quantityFood = ran.Next(1, 4);
-            int quantityWater = ran.Next(1, 4);
 
             if (type == "wood")
             {
+                int quantityWood = ran.Next(1, 4);
                 db.Resources.Find(1).Wood += quantityWood;
                 Session["ActionMessage"] = "You found " + quantityWood + " wood!";
             }
             else if(type == "food")
             {
+                int quantityFood = ran.Next(1, 4);
                 db.Resources.Find(1).Food += quantityFood;
                 Session["ActionMessage"] = "You found " + quantityFood + " food!";
             }
             else if(type == "water")
             {
+                int quantityWater = ran.Next(1, 5);
                 db.Resources.Find(1).Water += quantityWater;
                 Session["ActionMessage"] = "You found " + quantityWater + " Water!";
+            }
+            else if(type == "stone")
+            {
+                int quantityStone = ran.Next(0, 4);
+                db.Resources.Find(1).Stone += quantityStone;
             }
             db.GameDatas.Find(1).Actions--;
             db.SaveChanges();
@@ -124,27 +136,35 @@ namespace VillageGame.Controllers
             {
                 return RedirectToAction("GameOver");
             }
-            else if(db.GameDatas.Find(1).Actions > 0)
+
+            if(db.GameDatas.Find(1).Actions > 0)
             {
                 Session["ActionMessage"] = "You sill have Actions left!";
                 return RedirectToAction("Index");
             }
+
+            Session["ActionMessage"] = "";
+            resources.Food -= VillagerCount - buildings.Farms;
+            resources.Water -= VillagerCount - buildings.Wells;
+            Game.Actions = VillagerCount;
+            Game.Days++;
+            db.SaveChanges();
+            if (GotRaided())
+            {
+                Session["Raided"] = true;
+                return RedirectToAction("Raided");
+            }
+            if (EndGame())
+            {
+                return RedirectToAction("GameOver");
+            }
             else
             {
-                Session["ActionMessage"] = "";
-                resources.Food -= VillagerCount - buildings.Farms;
-                resources.Water -= VillagerCount - buildings.Wells;
-                Game.Actions = VillagerCount;
-                Game.Days++;
-                db.SaveChanges();
-                if (GotRaided())
-                {
-                    return RedirectToAction("Raided");
-                }
                 return RedirectToAction("Index");
             }
         }
 
+        //make an are you sure message page at some point, for now it starts a new game
         public ActionResult YouSure(string type)
         {
             List<Villager> villagers = db.Villagers.ToList();
@@ -154,8 +174,10 @@ namespace VillageGame.Controllers
             db.Buildings.Find(1).Wells = 0;
             db.Buildings.Find(1).Houses = 1;
             db.Buildings.Find(1).Farms = 0;
+            db.Buildings.Find(1).Castles = 0;
             db.GameDatas.Find(1).Days = 0;
             db.GameDatas.Find(1).Actions = 0;
+
             for(int i = 0; i < villagers.Count; i++)
             {
                 db.Villagers.Remove(villagers[i]);
@@ -172,41 +194,51 @@ namespace VillageGame.Controllers
             int foodRaided = ran.Next(1, 4);
             int waterRaided = ran.Next(1, 4);
             int villagerCount = db.Villagers.ToArray().Length;
+            List<Villager> villagers = db.Villagers.ToList();
             int VillagerIndex = ran.Next(1, villagerCount);
             var resource = db.Resources.Find(1);
-            Villager unluckyGuy = db.Villagers.Find(VillagerIndex);
-
-            if(resource.Food < foodRaided)
+            Villager unluckyGuy = villagers[VillagerIndex];
+            string nameOfTheDeceased = unluckyGuy.Name;
+            if ((bool)Session["Raided"] == true)
             {
-                resource.Food = 0;
+                if (resource.Food < foodRaided)
+                {
+                    resource.Food = 0;
+                }
+                else
+                {
+                    db.Resources.Find(1).Food -= foodRaided;
+                }
+
+                if (resource.Water < waterRaided)
+                {
+                    resource.Water = 0;
+                }
+                else
+                {
+                    db.Resources.Find(1).Water -= waterRaided;
+                }
+
+                Session["LostFood"] = "You've lost " + foodRaided + " food";
+                Session["LostWater"] = "You've lost " + waterRaided + " water";
+                if()
+                Session["LostVillager"] = nameOfTheDeceased + "has died and their house was burned to the ground";
+                db.Buildings.Find(1).Houses--;
+
+                db.Villagers.Remove(unluckyGuy);
+                db.SaveChanges();
+                Session["Raided"] = false;
             }
             else
             {
-                db.Resources.Find(1).Food -= foodRaided;
+                ViewBag.NotRaided = "You're trying to get raided? Who's side are you on?";
             }
-            if(resource.Water < waterRaided)
-            {
-                resource.Water = 0;
-            }
-            else
-            {
-                db.Resources.Find(1).Water -= waterRaided;
-            }
-            Session["LostFood"] = "You've lost " + foodRaided + " food";
-            Session["LostWater"] = "You've lost " + waterRaided + " water";
-            Session["LostVillager"] = unluckyGuy.Name + "has died and their house was burned to the ground";
-
-            db.Buildings.Find(1).Houses--;
-            db.Villagers.Remove(unluckyGuy);
-            db.SaveChanges();
-
 
             return View();
         }
 
         public ActionResult GameOver()
         {
-
             return View();
         }
 

@@ -1,5 +1,3 @@
-C:\Users\Neville Bamshoot\source\repos\VillageGame\VillageGame\obj\Debug\VillageGame.csprojAssemblyReference.cache
-C:\Users\Neville Bamshoot\source\repos\VillageGame\VillageGame\obj\Debug\VillageGame.csproj.CoreCompileInputs.cache
 C:\Users\Neville Bamshoot\source\repos\VillageGame\VillageGame\bin\VillageGame.dll.config
 C:\Users\Neville Bamshoot\source\repos\VillageGame\VillageGame\bin\VillageGame.dll
 C:\Users\Neville Bamshoot\source\repos\VillageGame\VillageGame\bin\VillageGame.pdb
@@ -79,6 +77,8 @@ C:\Users\Neville Bamshoot\source\repos\VillageGame\VillageGame\bin\Antlr3.Runtim
 C:\Users\Neville Bamshoot\source\repos\VillageGame\VillageGame\bin\System.Diagnostics.DiagnosticSource.xml
 C:\Users\Neville Bamshoot\source\repos\VillageGame\VillageGame\bin\Microsoft.AspNet.TelemetryCorrelation.xml
 C:\Users\Neville Bamshoot\source\repos\VillageGame\VillageGame\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Users\Neville Bamshoot\source\repos\VillageGame\VillageGame\obj\Debug\VillageGame.csprojAssemblyReference.cache
+C:\Users\Neville Bamshoot\source\repos\VillageGame\VillageGame\obj\Debug\VillageGame.csproj.CoreCompileInputs.cache
 C:\Users\Neville Bamshoot\source\repos\VillageGame\VillageGame\obj\Debug\VillageGame.csproj.CopyComplete
 C:\Users\Neville Bamshoot\source\repos\VillageGame\VillageGame\obj\Debug\VillageGame.dll
 C:\Users\Neville Bamshoot\source\repos\VillageGame\VillageGame\obj\Debug\VillageGame.pdb

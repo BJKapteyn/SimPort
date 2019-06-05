@@ -15,3 +15,7 @@ td {
 .myButtons {
     width: 100px;
 }
+
+#actionMessage {
+    color: blue;
+}

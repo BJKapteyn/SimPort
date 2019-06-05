@@ -2,22 +2,25 @@
 @using VillageGame.Controllers
 @{
     VillageGameEntities2 db = new VillageGameEntities2();
+    List<Villager> villagers = new List<Villager>();
+
     int days = (int)db.GameDatas.Find(1).Days;
     int actions = (int)db.GameDatas.Find(1).Actions;
     int villagerCount = (int)db.Villagers.ToList().Count;
-    List<Villager> villagers = new List<Villager>();
     int houses = (int)db.Buildings.Find(1).Houses;
     int wells = (int)db.Buildings.Find(1).Wells;
     int farms = (int)db.Buildings.Find(1).Farms;
     int food = (int)db.Resources.Find(1).Food;
     int water = (int)db.Resources.Find(1).Water;
     int wood = (int)db.Resources.Find(1).Wood;
+    int stone = (int)db.Resources.Find(1).Stone;
     int castles = (int)db.Buildings.Find(1).Castles;
     bool thereAreVillagers = villagerCount > 0;
 }
 <h1>Welcome to the Village Game!</h1>
 
-@Session["ActionMessage"]
+<h3 id="actionMessage">@Session["ActionMessage"]</h3>
+<h3 id="warningMessage">@Session["WarningMessage"]</h3>
 <table id="gameTable">
     <tr>
         <td class="myLabel">
@@ -125,7 +128,7 @@
             <p id="farmError"></p>
         </td>
     </tr>
-    @*<tr>
+    <tr>
         <td class="myLabel">
             <p>Castles:</p>
         </td>
@@ -134,15 +137,15 @@
         </td>
         <td class="myButtons">
             <form action="~/Home/BuildAction">
-                <input name="type" value="farm" class="hidden" />
-                <input type="submit" id="farmSubmit" value="Build" />
-                <p>(8 wood)</p>
+                <input name="type" value="castle" class="hidden" />
+                <input type="submit" id="castleSubmit" value="Build" />
+                <p>(10 wood, 10 stone)</p>
             </form>
         </td>
         <td>
             <p id="castleError"></p>
         </td>
-    </tr>*@
+    </tr>
     <tr>
         <td class="myLabel">
             <p>Food</p>
@@ -207,6 +210,30 @@
                     <form action="~/Home/ResourceAction">
                         <input name="type" value="wood" class="hidden" />
                         <input id="wood" type="submit" value="Gather Wood" />
+                    </form>
+                }
+                else
+                {
+                    <p>out of actions</p>
+                }
+            }
+        </td>
+        <td></td>
+    </tr>
+    <tr>
+        <td class="myLabel">
+            <p>Stone:</p>
+        </td>
+        <td class="myLabel">
+            <p id="stone">@stone</p>
+        </td>
+        <td class="myButtons">
+            @{
+                if (actions > 0)
+                {
+                    <form action="~/Home/ResourceAction">
+                        <input name="type" value="stone" class="hidden" />
+                        <input id="stone" type="submit" value="Gather Stone" />
                     </form>
                 }
                 else
